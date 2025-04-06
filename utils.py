@@ -16,7 +16,6 @@ from scipy import interpolate
 from scipy.optimize import curve_fit
 from scipy.signal import find_peaks
 
-import research._func as func
 
 
 
