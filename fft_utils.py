@@ -381,7 +381,7 @@ if __name__ == "__main__":
     t = np.linspace(-2000, 2000, 2**15)  # 時間軸 [fs]
     tau0 = 30  # 初期パルス幅 [fs]
     f0 = 0.07  # 中心周波数 [1/fs]
-    GDD = 50000  # fs^2（群遅延分散）
+    GDD = -50000  # fs^2（群遅延分散）
 
     # 初期ガウシアンパルス（時間領域）
     E0 = np.exp(-t**2 / (2 * tau0**2)) * np.cos(2 * np.pi * f0 * t)
@@ -423,6 +423,7 @@ if __name__ == "__main__":
     diff = np.max(np.abs(spec1 - spec2))
     print(f"max(abs(diff))   = {diff:.4e}")
 
+    # %%
     # --- プロット ---
     fig, axs = plt.subplots(3, 1, figsize=(10, 10))
 
@@ -443,7 +444,7 @@ if __name__ == "__main__":
     axs[2].set_xlabel('Time [fs]')
     axs[2].set_ylabel('Frequency [1/fs]')
     axs[2].legend()
-    axs[2].set_ylim(0, 0.2)
+    axs[2].set_ylim(0.05, 0.09)
     fig.colorbar(cf, ax=axs[2])
 
     plt.tight_layout()
