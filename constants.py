@@ -123,4 +123,91 @@ HEAT_UNIT = {
     "electron_volt": "eV",
 }
 # 電力
-
+POWER_UNIT = {
+    "watt": "W",
+    "kilowatt": "kW",
+    "horsepower": "hp",
+}
+# 電圧
+VOLTAGE_UNIT = {
+    "volt": "V",
+    "millivolt": "mV",
+    "kilovolt": "kV",
+}
+# 電流
+CURRENT_UNIT = {
+    "ampere": "A",
+    "milliampere": "mA",
+    "microampere": "μA",
+}
+# 抵抗
+RESISTANCE_UNIT = {
+    "ohm": "Ω",
+    "kilohm": "kΩ",
+    "megohm": "MΩ",
+}
+# 静電容量
+CAPACITANCE_UNIT = {
+    "farad": "F",
+    "microfarad": "μF",
+    "nanofarad": "nF",
+    "picofarad": "pF",
+}
+# 誘導
+INDUCTANCE_UNIT = {
+    "henry": "H",
+    "millihenry": "mH",
+    "microhenry": "μH",
+}
+# 磁束
+MAGNETIC_FLUX_UNIT = {
+    "weber": "Wb",
+    "millieweber": "mWb",
+    "microweber": "μWb",
+}
+# 磁場
+MAGNETIC_FIELD_UNIT = {
+    "tesla": "T",
+    "gauss": "G",
+}
+# 磁気誘導
+MAGNETIC_FLUX_DENSITY_UNIT = {
+    "tesla": "T",
+    "gauss": "G",
+}
+# 電場
+ELECTRIC_FIELD_UNIT = {
+    "volt_per_meter": "V/m",
+    "kilovolt_per_meter": "kV/m",
+}
+# 電気量
+ELECTRIC_CHARGE_UNIT = {
+    "coulomb": "C",
+    "milliampere_hour": "mAh",
+    "ampere_hour": "Ah",
+}
+# 電気抵抗
+ELECTRIC_RESISTANCE_UNIT = {
+    "ohm": "Ω",
+    "kilohm": "kΩ",
+    "megohm": "MΩ",
+}
+# 電気容量
+ELECTRIC_CAPACITY_UNIT = {
+    "farad": "F",
+    "microfarad": "μF",
+    "nanofarad": "nF",
+    "picofarad": "pF",
+}
+# 電気インダクタンス
+ELECTRIC_INDUCTANCE_UNIT = {
+    "henry": "H",
+    "millihenry": "mH",
+    "microhenry": "μH",
+}
+# 電気磁気
+ELECTRIC_MAGNETIC_UNIT = {
+    "weber": "Wb",
+    "millieweber": "mWb",
+    "microweber": "μWb",
+}
