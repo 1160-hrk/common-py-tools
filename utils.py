@@ -16,8 +16,6 @@ from scipy import interpolate
 from scipy.optimize import curve_fit
 from scipy.signal import find_peaks
 
-import research._func as func
-
 
 
 def get_ind(array:np.ndarray, values:np.ndarray)->np.ndarray:
@@ -55,7 +53,7 @@ def get_ind(array:np.ndarray, values:np.ndarray)->np.ndarray:
     return indices
 
 
-def get_subarray(x, xi=None, xf=None, return_ind=False):
+def get_subarray_1D(x, xi=None, xf=None, return_ind=False):
     """Get subarray of the list-type input.
 
     Parameters
@@ -78,11 +76,11 @@ def get_subarray(x, xi=None, xf=None, return_ind=False):
     if xi is None:
         i = 0
     else:
-        i = get_ind(i, x)
+        i = get_ind(x, xi)
     if xf is None:
         xx = x[i:]
     else:
-        f = get_ind(xf, x) + 1
+        f = get_ind(x, xf) + 1
         xx = x[i:f]
     if return_ind:
         return xx, [i, f]
@@ -139,7 +137,7 @@ def get_ind_max_xi_xf(x, y, xi=None, xf=None):
 
 def get_ind_xi_xf(v, x, y, xi=None, xf=None):
     xx, yy, [i, f] = get_subarray_2D(x, y, xi=xi, xf=xf)
-    ii = get_ind(v, yy)
+    ii = get_ind(yy, v)
     return ii + i
 
 
@@ -274,38 +272,3 @@ def pickle_load(path):
     with open(path, mode='rb') as f:
         data = pickle.load(f)
         return data
-###############################################################################
-#                           Other Functions(end)                              #
-###############################################################################
-###############################################################################
-#                         Function Definition(end)                            #
-###############################################################################
-
-
-# filepath = '/Users/hirokitsusaka/Research@the_Umiversity_of_TOKYO/\
-# experiments/FTIR/20220704/sample.csv'
-# wn_FTIR, transmittance_FTIR = ndarray_from_txtfile(filepath, ',')
-# wn_FTIR_base, transmittance_FTIR_base = get_subarray_2D(
-#     wn_FTIR, transmittance_FTIR, 2400, 2600
-#     )
-# transmittance_FTIR_base = np.average(transmittance_FTIR_base)
-# wn_FTIR, transmittance_FTIR = get_subarray_2D(
-#     wn_FTIR, transmittance_FTIR, 2200, 2400
-#     )
-# absorbance_FTIR = -np.log10(transmittance_FTIR/transmittance_FTIR_base)*1000
-# wl_FTIR = 10**7/wn_FTIR
-if __name__ == "__main__":
-    prop = [
-        {
-            'name': 'wavelength',
-            'dim': 'length',
-            'unit': 'nm',
-            'unit_factor': 1e-9
-            },
-        {
-            'name': 'absorbance_change',
-            'dim': 'none',
-            'unit': 'mOD',
-            'unit_factor': 1e-3
-            }
-        ]
