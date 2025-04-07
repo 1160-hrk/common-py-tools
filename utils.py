@@ -1,11 +1,3 @@
-# !/usr/bin/env python3.
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May  5 10:02:50 2023.
-
-@author: hirokitsusaka
-"""
-
 
 import csv
 import math as mt
