@@ -1,5 +1,6 @@
 import numpy as np
 from typing import Tuple, Union, List
+from scipy.signal import stft
 
 def fft_with_freq(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
@@ -372,6 +373,78 @@ def spectrogram_vectorized(
         return x_spec, freq, abs_fft, max_indices
     else:
         return x_spec, freq, abs_fft
+
+
+def spectrogram_scipy(
+    x: np.ndarray,
+    y: np.ndarray,
+    T: Union[int, float],
+    unit_T: str = 'index',
+    window_type: str = 'hamming',
+    return_max_index: bool = False,
+    step: int = 1
+) -> Union[Tuple[np.ndarray, np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]:
+    """
+    Compute a spectrogram using SciPy's optimized short-time Fourier transform (STFT).
+
+    This function leverages scipy.signal.stft to perform STFT with efficient overlapping
+    and windowing, returning the magnitude spectrogram and optionally the index of
+    the dominant frequency at each time step.
+
+    Parameters
+    ----------
+    x : np.ndarray
+        Time axis of the input signal.
+    y : np.ndarray
+        Signal to analyze.
+    T : int or float
+        Window size. Interpreted as number of samples if unit_T is 'index', or as time range if 'x'.
+    unit_T : {'x', 'index'}, default='index'
+        Unit of T.
+    window_type : str, default='hamming'
+        Type of window passed to scipy.signal.stft.
+    return_max_index : bool, default=False
+        If True, returns the index of the peak amplitude in each time slice.
+    step : int, default=1
+        Step size for sliding window.
+
+    Returns
+    -------
+    x_spec : np.ndarray
+        Time axis of the spectrogram.
+    freq : np.ndarray
+        Frequency axis.
+    spec : np.ndarray
+        Spectrogram magnitude array (frequency x time).
+    max_indices : np.ndarray, optional
+        Indices of the frequency bin with maximum amplitude at each time point.
+    """
+    dx = x[1] - x[0]
+    fs = 1 / dx
+
+    T_index = int(np.round(T / dx)) if unit_T == 'x' else int(T)
+    noverlap = T_index - step
+
+    f, t_spec, Zxx = stft(
+        y,
+        fs=fs,
+        window=window_type,
+        nperseg=T_index,
+        noverlap=noverlap,
+        nfft=T_index,
+        return_onesided=True,
+        boundary=None,
+        padded=False
+    )
+
+    x_spec = x[0] + t_spec
+    spec = np.abs(Zxx).T  # 転置して (freq x time) → (time x freq) を修正
+
+    if return_max_index:
+        max_indices = np.argmax(spec.T, axis=0)
+        return x_spec, f, spec.T, max_indices
+    else:
+        return x_spec, f, spec.T
 
 
 if __name__ == "__main__":

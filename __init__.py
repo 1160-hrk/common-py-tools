@@ -6,7 +6,6 @@ from .fft_utils import (
     zero_filling,
     spectrogram,
     spectrogram_fast,
-    spectrogram_loop_fast,
     spectrogram_vectorized,
     spectrogram_scipy
 )
