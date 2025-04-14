@@ -1,98 +1,87 @@
-# 🧰 common-py-tools
+# 🧪 pyana
 
-研究用途の Python 実験・解析コードに共通して利用できるユーティリティ関数群をまとめたライブラリです。
-FFT 処理、可視化、フィッティング、データ読み込みなど、科学技術計算に頻出する処理を簡単に行えるように設計されています。
-
----
-
-## 📦 各モジュールの概要
-
-### 🔹 [`fft_utils.py`](docs/fft_utils.md)
-- 高速フーリエ変換（FFT）
-- スペクトログラムの可視化とピーク抽出
-- ゼロパディング・ゼロフィリング
-
-### 🔹 [`utils.py`](docs/utils.md)
-- インデックス検索・部分抽出（1D/2D）
-- 関数フィッティング補助（`scipy.optimize.curve_fit`）
-- テキスト/CSV/Pickle データの読み書き
-
-### 🔹 `plot_utils.py`（未記述）
-- グラフ描画のスタイル統一や定型処理の簡略化
-
-### 🔹 `data_loader.py`（未記述）
-- CSV/JSON/TSV などの読み込みインターフェース
-
-### 🔹 `constants.py`（未記述）
-- 物理定数やよく使う単位系の定義（例：c, h, k_B, eV）
+Python-based analysis toolkit for scientific data processing.
 
 ---
 
-## 🔧 インストール方法
-このリポジトリは `git submodule` で使用することを前提としています：
+## 🔰 Overview
 
-```bash
-git submodule update --init --recursive
-```
+`pyana` は、実験データやシミュレーションデータの解析に役立つ汎用的なツール群を集めた Python ライブラリです。スペクトル解析、2次元マップ解析、物理定数、ユーティリティ関数などを包括的に提供します。
 
-`requirements.txt` に必要なパッケージを記述しているため、以下でインストール可能です：
+- 🧮 FFTとスペクトログラム
+- 📈 ピーク検出・フィッティング・積分
+- 📊 信号データ (`SignalData`) / 2Dマップ (`Map2D`) の扱い
+- 📚 高度な可視化と前処理支援
+
+---
+
+## 📦 Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## 🏗 ディレクトリ構成（例）
-
-```
-common-py-tools/
-├── README.md
-├── fft_utils.py
-├── utils.py
-├── plot_utils.py
-├── data_loader.py
-├── constants.py
-├── docs/
-│   ├── fft_utils.md
-│   └── utils.md
-```
-
----
-
-## 📄 ドキュメント
-- [fft_utils.md](docs/fft_utils.md): FFT・スペクトログラム
-- [utils.md](docs/utils.md): フィッティング・配列抽出・IO
-
----
-
-## 🧪 実験プロジェクトとの連携方法
-このライブラリは、実験ごとに構成されるプロジェクト（例：`research-dev/experiments/YYYY-MM-DD_myexp/`）に `git submodule` として導入され、特定バージョンに固定されます。
+ローカル開発の場合：
 
 ```bash
-cd common-py-tools
-git checkout v1.3.0
-```
-
-固定後、親リポジトリで以下のようにバージョンを固定：
-
-```bash
-git add common-py-tools
-git commit -m "Fix common-py-tools to v1.3.0"
-git push
+git clone https://github.com/1160-hrk/pyana.git
+cd pyana
 ```
 
 ---
 
-## ✨ その他
-- `tag_common.sh` スクリプトを使えば、バージョンタグ・ブランチ作成と親リポジトリへの反映を自動化できます。
-- 各関数に対するサンプル使用例や Jupyter Notebook 化も今後対応予定です。
+## 🗂 Module Structure
+
+| モジュール名         | 説明                                                                 |
+|----------------------|----------------------------------------------------------------------|
+| `utils.py`           | 汎用ユーティリティ（部分抽出・ファイル入出力・フィッティングなど） |
+| `fft_utils.py`       | FFT・Zero padding・スペクトログラムなど                              |
+| `constants.py`       | 物理定数と単位の辞書                                                 |
+| `func.py`            | Gaussian, Lorentzian, Voigt などの代表的関数群                       |
+| `signal1d.py`        | 1次元信号クラス `SignalData`（カーソル・解析機能）                   |
+| `map2d.py`           | 2次元マップクラス `Map2D`（平滑化・等高線・トラッキング）            |
 
 ---
 
-## 👨‍🔬 Maintainer
-- Hiroki Tsusaka ＠ 研究用
+## 🔧 Usage Example
+
+### 1D Signal Analysis
+
+```python
+from pyana.signal1d import SignalData
+import numpy as np
+
+x = np.linspace(0, 10, 1000)
+y = np.sin(x) + np.random.normal(0, 0.1, x.shape)
+
+sig = SignalData(x, y)
+sig.set_cursors(2, 8)
+peak_idx = sig.find_peaks_segment()
+```
+
+### 2D Map Processing
+
+```python
+from pyana.map2d import Map2D
+import numpy as np
+
+x = np.linspace(0, 1, 100)
+y = np.linspace(0, 2, 200)
+z = np.random.rand(len(y), len(x))
+
+mp = Map2D(x, y, z)
+mp.plot()
+```
 
 ---
 
-ご要望・バグ報告・機能追加の希望があればお気軽に Issue をお寄せください！
+## 📄 License
+
+MIT License
+
+---
+
+## ✨ Author
+
+Hiroki Tsusaka @1160-hrk  
+The University of Tokyo
