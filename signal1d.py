@@ -2,7 +2,7 @@ import numpy as np
 from typing import Optional, Tuple, Callable, Union
 from scipy.optimize import curve_fit
 from scipy.signal import find_peaks, detrend, savgol_filter
-from scipy.integrate import simps, trapz
+from scipy.integrate import simpson, trapezoid
 from scipy.fft import fft, fftfreq
 from scipy.interpolate import interp1d
 
@@ -164,9 +164,9 @@ class SignalData:
         """
         xseg, yseg = self.get_segment()
         if method == "simpson":
-            return simps(yseg, xseg)
+            return simpson(yseg, xseg)
         elif method == "trapezoidal":
-            return trapz(yseg, xseg)
+            return trapezoid(yseg, xseg)
         else:
             raise ValueError("method must be 'simpson' or 'trapezoidal'")
     

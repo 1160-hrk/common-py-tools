@@ -71,6 +71,11 @@ x_spec, freq, spec = spectrogram(t, E, T=100, unit_T='x')
 
 ---
 
+### `spectrogram_scipy(...)`
+scipy.signal.stftを利用した高速化。
+
+---
+
 ## 🧪 使用例（GDDのあるチャープパルス）
 
 ```python
