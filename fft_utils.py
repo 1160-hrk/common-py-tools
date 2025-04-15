@@ -439,7 +439,9 @@ def spectrogram_scipy(
 
     x_spec = x[0] + t_spec
     spec = np.abs(Zxx).T  # 転置して (freq x time) → (time x freq) を修正
-
+    f = f[:-1]
+    spec = spec[:, :-1]
+    
     if return_max_index:
         max_indices = np.argmax(spec.T, axis=0)
         return x_spec, f, spec.T, max_indices
@@ -488,7 +490,7 @@ if __name__ == "__main__":
 
     # --- スペクトログラム（高速版） ---
     start_time = time.time()
-    x_spec2, freq2, spec2, max_idx2 = spectrogram_fast(t, E, T=T_window, unit_T='x', step=step, return_max_index=True)
+    x_spec2, freq2, spec2, max_idx2 = spectrogram_scipy(t, E, T=T_window, unit_T='x', step=step, return_max_index=True)
     elapsed2 = time.time() - start_time
     print(f"spectrogram_fast : {elapsed2:.4f} sec, shape = {spec2.shape}")
 
