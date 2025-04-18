@@ -1,3 +1,13 @@
+from importlib.resources import files
+
+try:
+    version_file = files(__package__).joinpath("../../../VERSION.txt")
+    __version__ = version_file.read_text(encoding="utf-8").strip()
+except Exception:
+    __version__ = "unknown"
+
+
+
 from .fft_utils import (
     fft_with_freq,
     fft_positive_freq,
